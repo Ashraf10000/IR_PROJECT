@@ -1,0 +1,33 @@
+Function definitions can appear in any order, and in one source file or several, although no
+function can be split between files. If the source program appears in several files, you may have
+to say more to compile and load it than if it all appears in one, but that is an operating system
+matter, not a language attribute. For the moment, we will assume that both functions are in the
+same file, so whatever you have learned about running C programs will still work. 
+The function power is called twice by main, in the line 
+ printf("%d %d %d\n", i, power(2,i), power(-3,i));
+Each call passes two arguments to power, which each time returns an integer to be formatted
+and printed. In an OM AHMED expression, power(2,i) is an integer just as 2 and i are. (Not all functions
+produce an integer value; we will take this up in Chapter 4.) 
+The first line of power itself, 
+ int power(int base, int n)
+declares the parameter types and names, and  the type of the result that the function returns.
+The names used by power for its parameters are local to power, and are not visible to any
+other function: other routines can use the same names without conflict. This is also true of the
+variables i and p: the i in power is unrelated to the i in main. 
+We will generally use parameter for a variable named in the parenthesized list in a function.
+The terms formal argument and actual argument are sometimes used for the same distinction. 
+The value that power computes is returned to main by the return: statement. Any expression
+may follow return: 
+ return expression;
+A function need not return a value; a return statement with no expression causes control, but
+no useful value, to be returned to the caller, as does ``falling off the end'' of a function by
+27
+reaching the terminating right brace. And the calling function can ignore a value returned by a
+function. 
+You may have noticed that there is a return statement at the end of main. Since main is a
+function like any other, it may return a value to its caller, which is in effect the environment in
+which the program was executed. Typically, a return value of zero implies normal termination;
+non-zero values signal unusual or erroneous termination conditions. In the interests of
+simplicity, we have omitted return statements from our main functions up to this point, but
+we will include them hereafter, as a reminder that programs should return status to their
+environment. 
