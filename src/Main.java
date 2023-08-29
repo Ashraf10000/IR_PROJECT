@@ -1,4 +1,5 @@
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -15,6 +16,7 @@ import org.apache.lucene.util.Version;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.tartarus.snowball.ext.PorterStemmer;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -37,8 +39,9 @@ public class Main {
         //getting and preparing all input files
         File[]files = new File(DocsPath).listFiles();
         Directory dir = FSDirectory.open(Path.of(indexPath).toFile());
-        Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_42);
         //Building Documents and inverted index
+        EnglishAnalyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);
+        //PorterStemmer analyzer = new PorterStemmer();
         IndexWriterConfig cfg = new IndexWriterConfig(Version.LUCENE_42,analyzer);
         IndexWriter writer = new IndexWriter(dir,cfg);
         for (File f:files) {
