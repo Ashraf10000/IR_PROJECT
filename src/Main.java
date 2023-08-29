@@ -16,7 +16,6 @@ import org.apache.lucene.util.Version;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.tartarus.snowball.ext.PorterStemmer;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -39,9 +38,8 @@ public class Main {
         //getting and preparing all input files
         File[]files = new File(DocsPath).listFiles();
         Directory dir = FSDirectory.open(Path.of(indexPath).toFile());
+        EnglishAnalyzer analyzer = new EnglishAnalyzer (Version.LUCENE_42);
         //Building Documents and inverted index
-        EnglishAnalyzer analyzer = new EnglishAnalyzer(Version.LUCENE_42);
-        //PorterStemmer analyzer = new PorterStemmer();
         IndexWriterConfig cfg = new IndexWriterConfig(Version.LUCENE_42,analyzer);
         IndexWriter writer = new IndexWriter(dir,cfg);
         for (File f:files) {
@@ -73,7 +71,7 @@ public class Main {
     public static void search(String path, String Query,String SearchField,String ReturnedField,int hits)throws IOException, ParseException {
         Directory dir = FSDirectory.open(Path.of(path).toFile());
         IndexReader reader = DirectoryReader.open(dir);
-        Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_42);
+        EnglishAnalyzer  analyzer = new EnglishAnalyzer (Version.LUCENE_42);
         Query query = new QueryParser(Version.LUCENE_42,SearchField,analyzer).parse(Query);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopDocs Hits = searcher.search(query,hits);
