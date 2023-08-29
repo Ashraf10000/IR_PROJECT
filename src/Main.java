@@ -61,7 +61,7 @@ public class Main {
                 writer.addDocument(doc);
             }
         }
-        System.out.println("# of docs = " + writer.numDocs());
+        System.out.println("#of docs = " + writer.numDocs());
         writer.close();
 
         //Search Part (Phrase & Term & Boolean Queries)
